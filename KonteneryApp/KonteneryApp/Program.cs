@@ -1,8 +1,10 @@
 ﻿
-public class KonteneryApp
+namespace KonteneryApp;
+
+public class Program
 {
     public static void Main(string[] args)
-    {
+    { 
         
     }
 }
