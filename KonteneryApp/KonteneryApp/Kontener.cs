@@ -12,30 +12,51 @@ public class Container
     public static HashSet<int> NumsSet { get; set; } = new HashSet<int>();
     public double MaxLoad { get; set; }
 
-    public Container(double loadWeight, double height, double weight, double depth, string type, int num, double maxLoad)
+    public Container(double loadWeight, double height, double weight, double depth, string type, double maxLoad)
     {
-        if (NumsSet.Contains(num))
-        {
-            throw new Exception("Container with the provided number already exists.");
-        }
-        LoadWeight = loadWeight;
+        LoadWeight = 0;
         Height = height;
         Weight = weight;
         Depth = depth;
-        SerialNumber = GenerateSerialNumber(type, num);
-        NumsSet.Add(num);
+        SerialNumber = GenerateSerialNumber(type);
+        NumsSet.Add(GenerateNumber());
         MaxLoad = maxLoad;
     }
 
-    public string GenerateSerialNumber(string type, int num)
+    public string GenerateSerialNumber(string type)
     {
         StringBuilder res = new StringBuilder();
         
         res.Append("KON-");
         res.Append(type + "-");
-        res.Append(num);
+        res.Append(GenerateNumber());
         
         return res.ToString();
     }
-    
+
+    public int GenerateNumber()
+    {
+        int num = 0;
+        while (NumsSet.Contains(num))
+        {
+            num++;
+        }
+        return num;
+    }
+
+    public void EmptyContainer()
+    {
+        LoadWeight = 0;
+    }
+
+    public void PutIntoContainer(double weight)
+    {
+        double spaceLeft = MaxLoad - LoadWeight;
+        if (spaceLeft < weight)
+            throw new OverfillException("There's not enough space left in the container.");
+    }
+}
+public class OverfillException : Exception
+{
+    public OverfillException(string message) : base(message) {}
 }
