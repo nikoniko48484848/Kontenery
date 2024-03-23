@@ -44,12 +44,12 @@ public class Container
         return num;
     }
 
-    public void EmptyContainer()
+    public virtual void EmptyContainer()
     {
         LoadWeight = 0;
     }
 
-    public void PutIntoContainer(double weight)
+    public virtual void LoadContainer(double weight)
     {
         double spaceLeft = MaxLoad - LoadWeight;
         if (spaceLeft < weight)
